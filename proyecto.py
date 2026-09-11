@@ -19,10 +19,10 @@ def ejecutar_lmc_subrutinas(memoria: list, entradas: list) -> list:
         direccion = instruccion % 100
         pc += 1
 
-        if instruccion == 0:                 # HLT
+        if instruccion == 0:    # HLT
             break
 
-        elif instruccion == 901:             # INP
+        elif instruccion == 901:   # INP
 
             if len(entradas) == 0:
                 raise ValueError(
@@ -31,39 +31,39 @@ def ejecutar_lmc_subrutinas(memoria: list, entradas: list) -> list:
 
             acumulador = entradas.pop(0)
 
-        elif instruccion == 902:             # OUT
+        elif instruccion == 902:    # OUT
             salidas.append(acumulador)
 
-        elif opcode == 5:                    # LDA
+        elif opcode == 5:    # LDA
             acumulador = memoria[direccion]
 
-        elif opcode == 3:                    # STA
+        elif opcode == 3:      # STA
             memoria[direccion] = acumulador
 
-        elif opcode == 1:                    # ADD
+        elif opcode == 1:        # ADD
             acumulador = (
                 acumulador + memoria[direccion]
             ) % 1000
 
-        elif opcode == 2:                    # SUB
+        elif opcode == 2:      # SUB
             acumulador = acumulador - memoria[direccion]
 
-        elif opcode == 6:                    # BRA
+        elif opcode == 6:     # BRA
             pc = direccion
 
-        elif opcode == 7:                    # BRZ
+        elif opcode == 7:    # BRZ
             if acumulador == 0:
                 pc = direccion
 
-        elif opcode == 8:                    # BRP
+        elif opcode == 8:     # BRP
             if acumulador >= 0:
                 pc = direccion
 
-        elif opcode == 4:                    # CALL
+        elif opcode == 4:      # CALL
             returns.append(pc)
             pc = direccion
 
-        elif instruccion == 999:             # RET
+        elif instruccion == 999:  # RET
 
             if len(returns) == 0:
                 raise ValueError(

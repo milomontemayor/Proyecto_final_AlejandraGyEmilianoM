@@ -1,0 +1,16 @@
+// Programa 2: diferencia positiva
+// Lee A y B; siempre muestra el valor absoluto de A - B (nunca negativo).
+// POS se usa en "BRP POS" antes de estar definida mas abajo: ejercita que
+// el ensamblador resuelva etiquetas hacia adelante (dos pasadas).
+        INP
+        STA A
+        INP
+        STA B
+        SUB A
+        BRP POS
+        LDA A
+        SUB B
+POS     OUT
+        HLT
+A       DAT 000
+B       DAT 000
