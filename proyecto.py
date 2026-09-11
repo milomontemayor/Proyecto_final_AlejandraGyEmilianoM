@@ -2,6 +2,7 @@
 # EMILIANO MONTEMAYOR BURROLA - A01564346
 
 import sys
+import os
 
 
 def ejecutar_lmc_subrutinas(memoria: list, entradas: list) -> list:
@@ -34,13 +35,13 @@ def ejecutar_lmc_subrutinas(memoria: list, entradas: list) -> list:
         elif instruccion == 902:    # OUT
             salidas.append(acumulador)
 
-        elif opcode == 5:    # LDA
+        elif opcode == 5:  # LDA
             acumulador = memoria[direccion]
 
         elif opcode == 3:      # STA
             memoria[direccion] = acumulador
 
-        elif opcode == 1:        # ADD
+        elif opcode == 1:      # ADD
             acumulador = (
                 acumulador + memoria[direccion]
             ) % 1000
@@ -80,7 +81,7 @@ def ejecutar_lmc_subrutinas(memoria: list, entradas: list) -> list:
     return salidas
 
 
-# ---------------- ENSAMBLADOR ----------------
+# ensambladora 
 
 mnemónicos = {
     "INP": 901,
@@ -119,9 +120,9 @@ def ensamblar(archivo):
             if linea != "":
                 lineas.append(linea)
 
-    # -------- PRIMERA PASADA --------
+    # 1era pasada
 
-    simbolos = {} # Etiquetas
+    simbolos = {}  # Etiquetas
     direccion = 0  # Dirección de memoria
 
     for linea in lineas:
@@ -162,7 +163,7 @@ def ensamblar(archivo):
                     "las 100 casillas."
                 )
 
-    # -------- SEGUNDA PASADA --------
+    # 2da pasada
 
     memoria = []
 
@@ -264,8 +265,7 @@ def ensamblar(archivo):
                 f"'{instruccion}'."
             )
 
-        # Revisar que el código quepa
-        # en tres dígitos
+        # Revisar que el código quepa en tres dígitos
         if codigo < 0 or codigo > 999:
 
             raise ValueError(
@@ -275,16 +275,16 @@ def ensamblar(archivo):
 
         memoria.append(codigo)
 
-    # Rellenar hasta 100 casillas
+    # Rellenar hasta 100 casillas del 00 al 99
     while len(memoria) < 100:
         memoria.append(0)
 
     return memoria, simbolos
 
 
-# ---------------- PROGRAMA PRINCIPAL ----------------
+# programa principal
 
-archivo = "programa1.txt"
+archivo = "programa5.txt"
 
 
 try:
@@ -302,10 +302,21 @@ try:
             f"{i:02d},{memoria[i]:03d}"
         )
 
-    # guardar la memoria ensamblada en un archivo
+    # Buscar el siguiente número disponible
+    numero_archivo = 1
 
+    while os.path.exists(
+        f"programa_ensamblado{numero_archivo}.txt"
+    ):
+        numero_archivo += 1
+
+    nombre_archivo_salida = (
+        f"programa_ensamblado{numero_archivo}.txt"
+    )
+
+    # Guardar la memoria ensamblada
     with open(
-        "programa_ensamblado.txt",
+        nombre_archivo_salida,
         "w"
     ) as f:
 
@@ -316,8 +327,7 @@ try:
             )
 
     print(
-        "\nArchivo "
-        "'programa_ensamblado.txt' "
+        f"\nArchivo '{nombre_archivo_salida}' "
         "creado correctamente..."
     )
 
