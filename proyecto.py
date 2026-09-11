@@ -284,16 +284,7 @@ def ensamblar(archivo):
 
 # ---------------- PROGRAMA PRINCIPAL ----------------
 
-if len(sys.argv) < 2:
-
-    print(
-        "Uso: python ensamblador.py programa.txt"
-    )
-
-    sys.exit()
-
-
-archivo = sys.argv[1]
+archivo = "programa1.txt"
 
 
 try:
